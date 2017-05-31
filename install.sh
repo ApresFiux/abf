@@ -14,4 +14,3 @@ sed -i 's|bcan=""|bcal='$wdir'|' $wdir/abf.sh
 sed -i 's/mail=""/mail='$mail'/' $wdir/abf.sh
 chmod +x $wdir/abf.sh && $wdir/abf.sh
 
-echo "2"
