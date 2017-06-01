@@ -15,13 +15,13 @@ mail=""
 
 #BasicFunctions[creates if not existing]
 iffun(){
-    if [ ! -f @1 ]; then
-        touch @1
+    if [ ! -f $1 ]; then
+        touch $1
     fi
 }
 iffundir(){
-    if [ ! -d @1 ]; then
-        mkdir -p @1
+    if [ ! -d $1 ]; then
+        mkdir -p $1
     fi
 }
 iffun "$bcan/checker.art"
