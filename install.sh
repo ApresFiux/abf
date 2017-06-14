@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$1" = "uninstall" ]; then
+if [ "$1" = "uninstall" ]; then ###uninstallation
     rm -rf /usr/bin/abf
     exit 0
 fi
