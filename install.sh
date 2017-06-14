@@ -1,6 +1,11 @@
 #!/bin/bash
 if [ "$1" = "uninstall" ]; then ###uninstallation
-    rm -rf /usr/bin/abf
+    if [ -d /usr/bin/abf ]; then
+    	rm -rf /usr/bin/abf
+	echo "ABF has been uninstalled successfully!"
+    else
+	echo "ABF doesn't exists on this machine, nothing to uninstall."
+    fi
     exit 0
 fi
 Select="0"
