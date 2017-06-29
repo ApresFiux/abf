@@ -14,6 +14,11 @@ bcan=""
 mail=""
 
 #BasicFunctions[creates if not existing]
+checker(){
+if [ $? = "0" ]; then
+	echo "$1 - OK"  >> $bcan/checker.art; else "$1 - error!" >> $bcan/checker.art
+fi
+}
 iffun(){
     if [ ! -f $1 ]; then
         touch $1
@@ -29,25 +34,20 @@ echo "-- $(date +%Y-%m-%d:%H:%M:%S) --" >> $bcan/checker.art
 
 ##how many bad logins
 howman=$(cat /var/log/auth.log | egrep "Fail|fail" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' |sort | uniq -c | sort -n |tail -1 | awk '{print $1}')
-if [ $? = "0" ]; then 
-	echo "howman - OK" >> $bcan/checker.art; else "howman - error!" >> $bcan/checker.art
-fi
-
+checker howman
 ##problematic IP address
 whois=$(cat /var/log/auth.log | egrep "Fail|fail" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' |sort | uniq -c | sort -n |tail -1 | awk '{print $2}')
-
-if [ $? = "0" ]; then 
-        echo "whois - OK" >> $bcan/checker.art; else "whois - error!" >> $bcan/checker.art
-fi
+checker whois
 ##how many bad logins before block
 if [[ $howman -gt 7 ]]; then
 		iffun "$bcan/whoisip.art"
    		wrz=$(cat $bcan/whoisip.art)
 			if [[ $whois != $wrz ]]; then
 			curl -s ipinfo.io/"$whois"/region > $bcan/gregion.art
-		        	if [ $? = "0" ]; then
-                			echo "1st Location checker - OK" >> $bcan/checker.art; else "1st Location checker - ERROR" >> $bcan/checker.art
-        			fi	
+			checker "1st location checker"	       
+			 #	if [ $? = "0" ]; then
+                	#		echo "1st Location checker - OK" >> $bcan/checker.art; else "1st Location checker - ERROR" >> $bcan/checker.art
+        		#	fi	
 				iffun "$bcan/gregion.art"
                 iffun "$bcan/gcountry.art"
 			sleep 0.5

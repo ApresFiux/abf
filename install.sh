@@ -23,7 +23,7 @@ mkdir -p $wdir && cp -v lib/check.badlogin.sh $wdir/abf.sh
     if [ -f /etc/lsb-release ]; then
         sed -i 's/wlog=""/wlog=\/var\/log\/auth.log/' $wdir/abf.sh
     fi
-sed -i 's|bcan=""|bcal='$wdir'|' $wdir/abf.sh
+sed -i 's|bcan=""|bcan='$wdir'|' $wdir/abf.sh
 
 while [ $Select -lt 1 ]; do
     read -p "Do you want to get email notifications?[Yy/Nn]" noty
