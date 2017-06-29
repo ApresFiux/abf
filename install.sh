@@ -1,7 +1,12 @@
 #!/bin/bash
+if [ $(id -u) != "0" ]; then
+	echo "please run as root"
+	exit 1
+fi 
 if [ "$1" = "uninstall" ]; then ###uninstallation
     if [ -d /usr/bin/abf ]; then
-    	rm -rf /usr/bin/abf
+    	rm -rf /usr/bin/abf 
+	crontab -l | grep -v abf.sh | crontab
 	echo "ABF has been uninstalled successfully!"
     else
 	echo "ABF doesn't exists on this machine, nothing to uninstall."
@@ -32,5 +37,6 @@ while [ $Select -lt 1 ]; do
         sed -i 's/mail=""/mail='$mail'/' $wdir/abf.sh
     fi
 chmod +x $wdir/abf.sh && $wdir/abf.sh
+(crontab -l; 2>/dev/null; echo "* * * * * $wdir/abf.sh") | crontab
 echo "Done."
 
